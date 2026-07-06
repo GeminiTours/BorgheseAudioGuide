@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEMINI TOURS — Galleria Borghese Audio Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#141110; --bg-2:#1E1917; --panel:#221C19;
+    --cream:#F4EFE6; --muted:#B7AB9B; --gold:#C9A24B; --red:#C4453B; --line:#3A312B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--cream);font-family:'Inter',sans-serif;line-height:1.6}
+  .wrap{max-width:860px;margin:0 auto;padding-bottom:60px}
+
+  .brand{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 26px;border-bottom:1px solid var(--line);
+    letter-spacing:.3em;font-size:12px;font-weight:600;text-transform:uppercase;
+    position:sticky;top:0;background:var(--bg);z-index:5;
+  }
+  .brand .tag{color:var(--gold)}
+
+  .hero{padding:38px 26px 10px;text-align:center}
+  .hero .eyebrow{font-size:12px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:14px}
+  .hero h1{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:58px;line-height:1}
+  .hero .sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:var(--muted);margin-top:6px}
+
+  .langs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:22px 26px 6px}
+  .langbtn{
+    font-family:'Inter',sans-serif;font-size:13px;font-weight:500;
+    background:var(--bg-2);color:var(--muted);border:1px solid var(--line);
+    padding:9px 15px;border-radius:999px;cursor:pointer;transition:.15s;
+  }
+  .langbtn:hover{color:var(--cream)}
+  .langbtn.active{background:var(--gold);color:#141110;border-color:var(--gold);font-weight:600}
+
+  .intro{text-align:center;color:var(--muted);font-size:14px;padding:6px 26px 4px}
+
+  .stops{padding:22px 26px 0}
+  .stop{
+    background:var(--panel);border:1px solid var(--line);border-radius:8px;
+    margin-bottom:18px;overflow:hidden;
+  }
+  .stop .thumb{width:100%;height:200px;object-fit:cover;display:block;background:var(--bg-2)}
+  .stop .pad{padding:18px 20px 18px}
+  .stop .top{display:flex;align-items:flex-start;gap:16px}
+  .num{
+    flex-shrink:0;width:40px;height:40px;border-radius:50%;
+    background:transparent;border:1.5px solid var(--gold);color:var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;
+  }
+  .stop .head{flex:1;min-width:0}
+  .stop .row1{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .stop h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:25px;line-height:1.05}
+  .badge{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#141110;background:var(--gold);border-radius:999px;padding:3px 9px}
+  .floor{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+  .stop .todo{color:#E5DCCE;font-size:14px;margin-top:8px}
+
+  .audio{margin-top:15px}
+  .audio audio{width:100%;height:38px;border-radius:8px}
+  .noaudio{display:flex;align-items:center;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:13px;font-style:italic}
+  .upload{
+    font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+    background:transparent;color:var(--gold);border:1px solid var(--gold);
+    padding:8px 14px;border-radius:6px;cursor:pointer;
+  }
+  .upload:hover{background:var(--gold);color:#141110}
+
+  .divider{display:flex;align-items:center;gap:16px;color:var(--gold);font-size:12px;letter-spacing:.24em;text-transform:uppercase;font-weight:600;padding:10px 6px 22px}
+  .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  footer{text-align:center;padding:34px 24px 10px;border-top:1px solid var(--line);margin:22px 26px 0}
+  footer .fname{letter-spacing:.32em;font-size:12px;font-weight:600;text-transform:uppercase;color:var(--gold)}
+  footer .wish{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;margin-top:6px}
+  .note{max-width:600px;margin:20px auto 0;color:var(--cream);font-size:17px;text-align:center;padding:0 26px;line-height:1.6;font-family:'Cormorant Garamond',serif;font-style:italic}
+  .copyright{text-align:center;color:#7C7264;font-size:11px;letter-spacing:.18em;padding:26px 26px 8px}
+
+  @media (max-width:560px){
+    .hero h1{font-size:44px}
+    .num{width:36px;height:36px;font-size:19px}
+    .stop .thumb{height:220px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand">
+    <span>Gemini&nbsp;Tours</span>
+    <span class="tag">Rome</span>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow" id="eyebrow">Audio Guide</div>
+    <h1>Galleria Borghese</h1>
+    <div class="sub" id="subtitle">Self-guided audio tour</div>
+  </div>
+
+  <div class="langs" id="langs"></div>
+  <div class="intro" id="intro"></div>
+
+  <div class="stops" id="stops"></div>
+
+  <footer>
+    <div class="fname">Gemini Tours</div>
+    <div class="wish" id="wish"></div>
+  </footer>
+  <div class="note" id="note"></div>
+  <div class="copyright">© 2026 GEMINI TOURS · All rights reserved</div>
+
+</div>
+
+<script>
+/* =========================================================
+   AUDIO — paste one URL per stop for each language.
+   Leave "" for stops without audio yet.
+   ========================================================= */
+const AUDIO = {
+  en: [
+    "https://raw.githubusercontent.com/GeminiTours/BorgheseAudio/main/Stop0EntranceHall.mp3",
+    "https://raw.githubusercontent.com/GeminiTours/BorgheseAudio/main/STOP1Apolo&Daphne.mp3",
+    "https://raw.githubusercontent.com/GeminiTours/BorgheseAudio/main/STOP2RapeOfProserpina.mp3",
+    "https://raw.githubusercontent.com/GeminiTours/BorgheseAudio/main/STOP3David.mp3",
+    "https://raw.githubusercontent.com/GeminiTours/BorgheseAudio/main/STOP4Aeneas,Anchises,Ascanius.mp3",
+    "https://raw.githubusercontent.com/GeminiTours/BorgheseAudio/main/STOP5CaravaggioRoom.mp3",
+    "https://raw.githubusercontent.com/GeminiTours/BorgheseAudio/main/STOP6TheTruthUnvailedByTime.mp3",
+    "https://raw.githubusercontent.com/GeminiTours/BorgheseAudio/main/STOP7PaulinaBonaparte.mp3",
+    "https://raw.githubusercontent.com/GeminiTours/BorgheseAudio/main/STOP8HiddenTreasuresRafael&Correggio.mp3",
+    "https://raw.githubusercontent.com/GeminiTours/BorgheseAudio/main/STOP9Sacred&ProfainLove.mp3"
+  ]
+};
+
+/* Artwork images (stable Wikimedia links). */
+const IMG = [
+  "https://commons.wikimedia.org/wiki/Special:FilePath/Sala%20di%20Mariano%20Rossi%20-%20Galleria%20Borghese.jpg?width=900",
+  "https://commons.wikimedia.org/wiki/Special:FilePath/Apollo%20and%20Daphne%20by%20Bernini%20(Galleria%20Borghese).jpg?width=900",
+  "https://commons.wikimedia.org/wiki/Special:FilePath/The%20Rape%20of%20Proserpina%20(Rome).jpg?width=900",
+  "https://commons.wikimedia.org/wiki/Special:FilePath/Bernini's%20David%2002.jpg?width=900",
+  "https://commons.wikimedia.org/wiki/Special:FilePath/Aeneas,%20Anchises,%20and%20Ascanius%20by%20Bernini.jpg?width=900",
+  "https://commons.wikimedia.org/wiki/Special:FilePath/David%20with%20the%20Head%20of%20Goliath-Caravaggio%20(1610).jpg?width=900",
+  "https://commons.wikimedia.org/wiki/Special:FilePath/Bernini%20Truth%20unveiled%20by%20Time%20Gal%20Borghese.jpg?width=900",
+  "https://commons.wikimedia.org/wiki/Special:FilePath/Antonio%20canova,%20Paolina%20Borghese%20come%20Venere%20vincitrice,%201804-08,%2001.jpg?width=900",
+  "https://commons.wikimedia.org/wiki/Special:FilePath/Raffaello,%20deposizione%20Borghese,%201507%20circa%2001.jpg?width=900",
+  "https://commons.wikimedia.org/wiki/Special:FilePath/Tiziano%20-%20Amor%20Sacro%20y%20Amor%20Profano%20(Galer%C3%ADa%20Borghese,%20Roma,%201514).jpg?width=900"
+];
+
+const LANGS = [ ["en","🇬🇧 English"] ];
+
+const T = {
+  en:{
+    eyebrow:"Audio Guide", sub:"Self-guided audio tour",
+    intro:"Match the picture to the artwork in front of you, then press play.",
+    upload:"Upload audio", noaudio:"No audio loaded yet",
+    wish:"Enjoy the Borghese — buon viaggio.",
+    newBadge:"New", floorGround:"Ground floor · Sculptures", floorUpper:"Upper floor · Paintings",
+    stairs:"⟰  Up the stairs",
+    stops:[
+      {t:"Welcome & Entrance Hall", floor:"ground",
+       d:"Begin in the grand entrance hall. Take in the ceiling and mosaics before the tour begins."},
+      {t:"Apollo & Daphne", floor:"ground",
+       d:"Bernini's marble miracle — the moment Daphne turns into a laurel tree as Apollo reaches her."},
+      {t:"The Rape of Proserpina", floor:"ground",
+       d:"Look at Pluto's hand pressing into marble 'flesh' — Bernini carved stone into softness."},
+      {t:"David", floor:"ground",
+       d:"Bernini's David caught mid-motion, about to release the sling. Walk around to feel the tension."},
+      {t:"Aeneas, Anchises & Ascanius", floor:"ground",
+       d:"Three generations fleeing Troy, carved by the young Bernini with his father Pietro."},
+      {t:"The Caravaggio Room", floor:"ground",
+       d:"A room of Caravaggio masterpieces — drama, shadow, and unflinching realism."},
+      {t:"The Truth Unveiled by Time", floor:"ground", isNew:true,
+       d:"Bernini's personal statue of Truth — a recent highlight of the tour. Look for the sun in her hand."},
+      {t:"Pauline Bonaparte", floor:"upper",
+       d:"Canova's reclining Venus — Napoleon's sister as the goddess of love. Note the lifelike marble cushion."},
+      {t:"Hidden Treasures: Raphael & Correggio", floor:"upper", isNew:true,
+       d:"Seek out the quieter masterpieces upstairs — Raphael's Deposition and Correggio's Danaë."},
+      {t:"Sacred & Profane Love", floor:"upper",
+       d:"Titian's enigmatic finale — two women, one clothed, one nude, and centuries of interpretation."}
+    ]
+  }
+};
+
+const NOTE = "Every masterpiece here began as raw stone or a blank canvas. What made them timeless was the vision to see what they could become. Carry that same eye out into the world.";
+
+let lang = "en";
+const uploaded = { en:{} };
+
+function render(){
+  const d=T[lang];
+  document.documentElement.lang=lang;
+  document.getElementById("eyebrow").textContent=d.eyebrow;
+  document.getElementById("subtitle").textContent=d.sub;
+  document.getElementById("intro").textContent=d.intro;
+  document.getElementById("wish").textContent=d.wish;
+  document.getElementById("note").textContent=NOTE;
+
+  const lc=document.getElementById("langs");
+  lc.innerHTML="";
+  LANGS.forEach(([code,label])=>{
+    const b=document.createElement("button");
+    b.className="langbtn"+(code===lang?" active":"");
+    b.textContent=label;
+    b.onclick=()=>{lang=code;render();};
+    lc.appendChild(b);
+  });
+
+  const sc=document.getElementById("stops");
+  sc.innerHTML="";
+  let stairsShown=false;
+  d.stops.forEach((st,i)=>{
+    // insert stairs divider before first upper-floor stop
+    if(st.floor==="upper" && !stairsShown){
+      const div=document.createElement("div");
+      div.className="divider";
+      div.textContent=d.stairs;
+      sc.appendChild(div);
+      stairsShown=true;
+    }
+
+    const card=document.createElement("div");
+    card.className="stop";
+
+    if(IMG[i]){
+      const img=document.createElement("img");
+      img.className="thumb"; img.loading="lazy"; img.alt=st.t; img.src=IMG[i];
+      card.appendChild(img);
+    }
+
+    const pad=document.createElement("div"); pad.className="pad";
+    const top=document.createElement("div"); top.className="top";
+    const num=document.createElement("div"); num.className="num"; num.textContent=i;
+    const head=document.createElement("div"); head.className="head";
+    const row1=document.createElement("div"); row1.className="row1";
+    const h=document.createElement("h3"); h.textContent=st.t;
+    row1.appendChild(h);
+    if(st.isNew){ const bg=document.createElement("span"); bg.className="badge"; bg.textContent=d.newBadge; row1.appendChild(bg); }
+    const fl=document.createElement("div"); fl.className="floor";
+    fl.textContent = st.floor==="upper" ? d.floorUpper : d.floorGround;
+    const todo=document.createElement("div"); todo.className="todo"; todo.textContent=st.d;
+    head.appendChild(row1); head.appendChild(fl); head.appendChild(todo);
+    top.appendChild(num); top.appendChild(head);
+
+    const audioWrap=document.createElement("div"); audioWrap.className="audio";
+    const src = uploaded[lang][i] || (AUDIO[lang]||[])[i] || "";
+    if(src){
+      const a=document.createElement("audio");
+      a.controls=true; a.preload="none"; a.src=src;
+      audioWrap.appendChild(a);
+    }else{
+      const na=document.createElement("div"); na.className="noaudio";
+      const txt=document.createElement("span"); txt.textContent=d.noaudio;
+      const btn=document.createElement("button"); btn.className="upload"; btn.textContent=d.upload;
+      const inp=document.createElement("input"); inp.type="file"; inp.accept="audio/*"; inp.style.display="none";
+      btn.onclick=()=>inp.click();
+      inp.onchange=e=>{ const f=e.target.files[0]; if(f){ uploaded[lang][i]=URL.createObjectURL(f); render(); } };
+      na.appendChild(txt); na.appendChild(btn); na.appendChild(inp);
+      audioWrap.appendChild(na);
+    }
+
+    pad.appendChild(top); pad.appendChild(audioWrap);
+    card.appendChild(pad);
+    sc.appendChild(card);
+  });
+}
+
+render();
+</script>
+</body>
+</html>
